@@ -1,4 +1,5 @@
-endpoint: http://192.168.99.100:4466
+#endpoint: http://192.168.99.100:4466
+endpoint: https://eu1.prisma.sh/djson-d8e350/family-meal/dev
 datamodel: datamodel.graphql
 hooks:
   post-deploy:

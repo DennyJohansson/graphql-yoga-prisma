@@ -1,13 +1,16 @@
 # import Post from './generated/prisma.graphql'
 # import User from './generated/prisma.graphql'
+# import Dish from './generated/prisma.graphql'
 
 type Query {
   posts(searchString: String): [Post!]!
   user(id: ID!): User
+  dishes(searchString: String): [Dish!]!
 }
 
 type Mutation {
   createDraft(authorId: ID!, title: String!, content: String!): Post
+  createDish(authorId: ID!, status: String!, content: String!): Dish
   publish(id: ID!): Post
   deletePost(id: ID!): Post
   signup(name: String!): User!

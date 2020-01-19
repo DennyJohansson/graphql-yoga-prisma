@@ -1,5 +1,9 @@
 # source: http://192.168.99.100:4466
-# timestamp: Sat Jan 11 2020 19:08:58 GMT+0100 (GMT+01:00)
+# timestamp: Sun Jan 19 2020 19:31:45 GMT+0100 (GMT+01:00)
+
+type AggregateDish {
+  count: Int!
+}
 
 type AggregatePost {
   count: Int!
@@ -14,6 +18,418 @@ type BatchPayload {
   count: Long!
 }
 
+type Dish implements Node {
+  id: ID!
+  content: String!
+  status: String!
+  author: User!
+}
+
+"""A connection to a list of items."""
+type DishConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DishEdge]!
+  aggregate: AggregateDish!
+}
+
+input DishCreateInput {
+  id: ID
+  content: String!
+  status: String!
+  author: UserCreateOneWithoutDishesInput!
+}
+
+input DishCreateManyWithoutAuthorInput {
+  create: [DishCreateWithoutAuthorInput!]
+  connect: [DishWhereUniqueInput!]
+}
+
+input DishCreateWithoutAuthorInput {
+  id: ID
+  content: String!
+  status: String!
+}
+
+"""An edge in a connection."""
+type DishEdge {
+  """The item at the end of the edge."""
+  node: Dish!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DishOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  status_ASC
+  status_DESC
+}
+
+type DishPreviousValues {
+  id: ID!
+  content: String!
+  status: String!
+}
+
+input DishScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DishScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DishScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DishScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+}
+
+type DishSubscriptionPayload {
+  mutation: MutationType!
+  node: Dish
+  updatedFields: [String!]
+  previousValues: DishPreviousValues
+}
+
+input DishSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DishSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DishSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DishSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DishWhereInput
+}
+
+input DishUpdateInput {
+  content: String
+  status: String
+  author: UserUpdateOneRequiredWithoutDishesInput
+}
+
+input DishUpdateManyDataInput {
+  content: String
+  status: String
+}
+
+input DishUpdateManyMutationInput {
+  content: String
+  status: String
+}
+
+input DishUpdateManyWithoutAuthorInput {
+  create: [DishCreateWithoutAuthorInput!]
+  connect: [DishWhereUniqueInput!]
+  set: [DishWhereUniqueInput!]
+  disconnect: [DishWhereUniqueInput!]
+  delete: [DishWhereUniqueInput!]
+  update: [DishUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [DishUpdateManyWithWhereNestedInput!]
+  deleteMany: [DishScalarWhereInput!]
+  upsert: [DishUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input DishUpdateManyWithWhereNestedInput {
+  where: DishScalarWhereInput!
+  data: DishUpdateManyDataInput!
+}
+
+input DishUpdateWithoutAuthorDataInput {
+  content: String
+  status: String
+}
+
+input DishUpdateWithWhereUniqueWithoutAuthorInput {
+  where: DishWhereUniqueInput!
+  data: DishUpdateWithoutAuthorDataInput!
+}
+
+input DishUpsertWithWhereUniqueWithoutAuthorInput {
+  where: DishWhereUniqueInput!
+  update: DishUpdateWithoutAuthorDataInput!
+  create: DishCreateWithoutAuthorInput!
+}
+
+input DishWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DishWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DishWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DishWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+  status: String
+
+  """All values that are not equal to given value."""
+  status_not: String
+
+  """All values that are contained in given list."""
+  status_in: [String!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [String!]
+
+  """All values less than the given value."""
+  status_lt: String
+
+  """All values less than or equal the given value."""
+  status_lte: String
+
+  """All values greater than the given value."""
+  status_gt: String
+
+  """All values greater than or equal the given value."""
+  status_gte: String
+
+  """All values containing the given string."""
+  status_contains: String
+
+  """All values not containing the given string."""
+  status_not_contains: String
+
+  """All values starting with the given string."""
+  status_starts_with: String
+
+  """All values not starting with the given string."""
+  status_not_starts_with: String
+
+  """All values ending with the given string."""
+  status_ends_with: String
+
+  """All values not ending with the given string."""
+  status_not_ends_with: String
+  author: UserWhereInput
+}
+
+input DishWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -23,16 +439,22 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createPost(data: PostCreateInput!): Post!
+  createDish(data: DishCreateInput!): Dish!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateDish(data: DishUpdateInput!, where: DishWhereUniqueInput!): Dish
   deleteUser(where: UserWhereUniqueInput!): User
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteDish(where: DishWhereUniqueInput!): Dish
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertDish(where: DishWhereUniqueInput!, create: DishCreateInput!, update: DishUpdateInput!): Dish!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
+  updateManyDishes(data: DishUpdateManyMutationInput!, where: DishWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyDishes(where: DishWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -495,10 +917,13 @@ input PostWhereUniqueInput {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  dishes(where: DishWhereInput, orderBy: DishOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dish]!
   user(where: UserWhereUniqueInput!): User
   post(where: PostWhereUniqueInput!): Post
+  dish(where: DishWhereUniqueInput!): Dish
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  dishesConnection(where: DishWhereInput, orderBy: DishOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DishConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -510,12 +935,14 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  dish(where: DishSubscriptionWhereInput): DishSubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   name: String!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  dishes(where: DishWhereInput, orderBy: DishOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Dish!]
 }
 
 """A connection to a list of items."""
@@ -532,6 +959,12 @@ input UserCreateInput {
   id: ID
   name: String!
   posts: PostCreateManyWithoutAuthorInput
+  dishes: DishCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutDishesInput {
+  create: UserCreateWithoutDishesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPostsInput {
@@ -539,9 +972,16 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutDishesInput {
+  id: ID
+  name: String!
+  posts: PostCreateManyWithoutAuthorInput
+}
+
 input UserCreateWithoutPostsInput {
   id: ID
   name: String!
+  dishes: DishCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
@@ -605,10 +1045,18 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   posts: PostUpdateManyWithoutAuthorInput
+  dishes: DishUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
+}
+
+input UserUpdateOneRequiredWithoutDishesInput {
+  create: UserCreateWithoutDishesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutDishesDataInput
+  upsert: UserUpsertWithoutDishesInput
 }
 
 input UserUpdateOneRequiredWithoutPostsInput {
@@ -618,8 +1066,19 @@ input UserUpdateOneRequiredWithoutPostsInput {
   upsert: UserUpsertWithoutPostsInput
 }
 
+input UserUpdateWithoutDishesDataInput {
+  name: String
+  posts: PostUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateWithoutPostsDataInput {
   name: String
+  dishes: DishUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertWithoutDishesInput {
+  update: UserUpdateWithoutDishesDataInput!
+  create: UserCreateWithoutDishesInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -719,6 +1178,9 @@ input UserWhereInput {
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
+  dishes_every: DishWhereInput
+  dishes_some: DishWhereInput
+  dishes_none: DishWhereInput
 }
 
 input UserWhereUniqueInput {

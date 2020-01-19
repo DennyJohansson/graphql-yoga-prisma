@@ -2,6 +2,7 @@ type User {
   id: ID! @id
   name: String!
   posts: [Post!]!
+  dishes: [Dish!]!
 }
 
 type Post {
@@ -9,5 +10,12 @@ type Post {
   title: String!
   content: String!
   published: Boolean! @default(value: false)
+  author: User!
+}
+
+type Dish {
+  id: ID! @id
+  content: String!
+  status: String!
   author: User!
 }

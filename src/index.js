@@ -16,6 +16,19 @@ const resolvers = {
         info
       );
     },
+    dishes: (_, args, context, info) => {
+      return context.prisma.query.dishes(
+        {
+          where: {
+            OR: [
+              { status_contains: args.searchString },
+              { content_contains: args.searchString }
+            ]
+          }
+        },
+        info
+      );
+    },
     user: (_, args, context, info) => {
       return context.prisma.query.user(
         {
@@ -34,6 +47,22 @@ const resolvers = {
           data: {
             title: args.title,
             content: args.title,
+            author: {
+              connect: {
+                id: args.authorId
+              }
+            }
+          }
+        },
+        info
+      );
+    },
+    createDish: (_, args, context, info) => {
+      return context.prisma.mutation.createDish(
+        {
+          data: {
+            status: args.status,
+            content: args.content,
             author: {
               connect: {
                 id: args.authorId
